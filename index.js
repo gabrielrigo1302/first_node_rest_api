@@ -1,10 +1,15 @@
-const express = require('express');
-
-const app = express();
+const customExpress = require("./config/customExpress");
+const connection = require('./infraestrutura/connection');
 const port = 3000;
+const app = customExpress();
 
-app.listen(port);
-
-app.get('/', ( _, response) => {
-    response.send("Servidor rodando")
-});
+connection.connect((error) => {
+    if(error) {
+        console.log("erro: ", error)
+    } else {
+        app.listen(port, () => {
+            console.log("Servidor rodando com sucesso")
+        });
+        
+    }
+})
