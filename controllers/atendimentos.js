@@ -1,11 +1,16 @@
+const Atendimento = require('../models/atendimentos');
+
 module.exports = (app) => {
     app.get('/atendimentos', ( _, response) => {
-        response.send('Servidor rodando');
+        Atendimento.get(response);
+    });
+
+    app.get('/atendimentos/:id', ( request, response) => {
+        const {id} = request.params
+        Atendimento.getById(parseInt(id), response);
     });
 
     app.post('/atendimentos', ( request, response) => {
-        console.log('request ===> ', request.body);
-
-        response.send('Servidor rodando');
+        Atendimento.post(request.body, response);
     });
 }
